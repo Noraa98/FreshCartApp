@@ -1,0 +1,21 @@
+<div class="container mb-4">
+      <input
+        type="text"
+        class="form-control border-info"
+        placeholder="Search by product name..."
+        [(ngModel)]="searchText"
+      />
+      <br>
+      <p>SearchedItem: {{searchText}}</p>
+      <select class="form-select border-info" [(ngModel)]="selectedCategoryID">
+        <option value="">All Categories ..</option>
+
+        @for (cat of categories; track cat.ID)
+        {
+           <option [value]="cat.ID">{{ cat.Name }}</option>
+        }
+      </select>
+
+    </div>
+
+<app-products [searchText]="searchText" [selectedCategoryID]="selectedCategoryID"></app-products>

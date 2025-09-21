@@ -1,0 +1,57 @@
+<div class="container mt-4">
+  <h2>User Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Email -->
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" formControlName="email"
+        [ngClass]="{'is-invalid': submitted && f['email'].invalid, 'is-valid': submitted && f['email'].valid}">
+      
+      @if (submitted && f['email'].errors) {
+        <div class="invalid-feedback">
+          @if (f['email'].errors['required']) {
+            <div>Email is required</div>
+          }
+          @if (f['email'].errors['email']) {
+            <div>Invalid email format</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label>Password</label>
+      <input type="password" class="form-control" formControlName="password"
+        [ngClass]="{'is-invalid': submitted && f['password'].invalid, 'is-valid': submitted && f['password'].valid}">
+      
+      @if (submitted && f['password'].errors) {
+        <div class="invalid-feedback">
+          @if (f['password'].errors['required']) {
+            <div>Password is required</div>
+          }
+          @if (f['password'].errors['minlength']) {
+            <div>Minimum 6 characters</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Buttons -->
+    <button type="submit" class="btn btn-success">Login</button>
+    <button type="button" class="btn btn-warning ms-2" (click)="onReset()">Reset</button>
+  </form>
+
+  <!-- Display Logged User -->
+  @if (loggedUser) {
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Logged User</h5>
+        <p><b>Email:</b> {{loggedUser.email}}</p>
+        <p><b>Password:</b> {{loggedUser.password}}</p>
+      </div>
+    </div>
+  }
+</div>
+

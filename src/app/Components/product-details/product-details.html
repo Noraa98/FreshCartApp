@@ -1,0 +1,22 @@
+@if(product)
+{
+  <div class="d-flex justify-content-center mt-5">
+    <div class="card shadow-sm" style="max-width: 600px; width: 100%;">
+      <img [src]="product.Img" [alt]="product.Name" class="mx-auto d-block img-fluid" />
+      <div class="card-body text-center">
+        <h5 class="card-title text-success mb-5">Product Details</h5>
+        <p class="card-text fs-5"><strong>Name:</strong> {{ product.Name }}</p>
+        <p class="card-text fs-5"><strong>Price:</strong> {{ product.Price | currency:'USD' }}</p>
+        <p class="card-text fs-5"><strong>Quantity:</strong> {{ product.Quantity }}</p>
+        <button (click)="backToProducts()" class="btn btn-danger mt-3 btn-lg ">Close</button>
+      </div>
+
+    </div>
+  </div>
+}
+@else
+{
+  <div class="text-center mt-5">
+    <h3 class="text-danger">Product not found!</h3>
+  </div>
+}

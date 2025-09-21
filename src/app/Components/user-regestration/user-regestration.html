@@ -1,0 +1,118 @@
+<div class="container mt-4">
+  <h2>User Registration</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Full Name -->
+    <div class="mb-3">
+      <label>Full Name</label>
+      <input type="text" class="form-control" formControlName="fullName"
+        [ngClass]="{'is-invalid': submitted && f['fullName'].invalid, 'is-valid': submitted && f['fullName'].valid}">
+      @if (submitted && f['fullName'].errors) {
+        <div class="invalid-feedback">
+          @if (f['fullName'].errors['required']) {
+            <div>Full Name is required</div>
+          }
+          @if (f['fullName'].errors['minlength']) {
+            <div>Minimum 5 characters</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" formControlName="email"
+        [ngClass]="{'is-invalid': submitted && f['email'].invalid, 'is-valid': submitted && f['email'].valid}">
+      @if (submitted && f['email'].errors) {
+        <div class="invalid-feedback">
+          @if (f['email'].errors['required']) {
+            <div>Email is required</div>
+          }
+          @if (f['email'].errors['email']) {
+            <div>Invalid email format</div>
+          }
+          @if (f['email'].errors['pattern']) {
+            <div>Email pattern is not correct</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Mobile Numbers -->
+    <div formArrayName="mobiles">
+      @for (mobile of mobiles.controls; track $index; let i = $index) {
+
+        <div class="mb-3">
+          <label>Mobile {{i+1}}</label>
+          <input type="text" class="form-control" [formControlName]="i"
+            [ngClass]="{'is-invalid': submitted && mobile.invalid, 'is-valid': submitted && mobile.valid}">
+          @if (submitted && mobile.errors) {
+            <div class="invalid-feedback">
+              @if (mobile.errors['required']) {
+                <div>Mobile is required</div>
+              }
+              @if (mobile.errors['pattern']) {
+                <div>Invalid mobile number</div>
+              }
+            </div>
+          }
+          @if (i > 0) {
+            <button class="btn btn-danger btn-sm mt-1" type="button" (click)="removeMobile(i)">Remove</button>
+          }
+        </div>
+      }
+    </div>
+    <button type="button" class="btn btn-secondary mb-3" (click)="addMobile()">Add Another Mobile</button>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label>Password</label>
+      <input type="password" class="form-control" formControlName="password"
+        [ngClass]="{'is-invalid': submitted && f['password'].invalid, 'is-valid': submitted && f['password'].valid}">
+      @if (submitted && f['password'].errors) {
+        <div class="invalid-feedback">
+          @if (f['password'].errors['required']) {
+            <div>Password is required</div>
+          }
+          @if (f['password'].errors['minlength']) {
+            <div>Minimum 6 characters</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="mb-3">
+      <label>Confirm Password</label>
+      <input type="password" class="form-control" formControlName="confirmPassword"
+        [ngClass]="{'is-invalid': submitted && (f['confirmPassword'].invalid || registerForm.errors?.['notMatch']), 'is-valid': submitted && f['confirmPassword'].valid && !registerForm.errors}">
+      @if (submitted && (f['confirmPassword'].errors || registerForm.errors?.['notMatch'])) {
+        <div class="invalid-feedback">
+          @if (f['confirmPassword'].errors?.['required']) {
+            <div>Confirm Password is required</div>
+          }
+          @if (registerForm.errors?.['notMatch']) {
+            <div>Passwords do not match</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Buttons -->
+    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="button" class="btn btn-warning ms-2" (click)="onReset()">Reset</button>
+  </form>
+
+  <!-- Display Registered User -->
+  @if (registeredUser) {
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Registered User</h5>
+        <p><b>Full Name:</b> {{registeredUser.fullName}}</p>
+        <p><b>Email:</b> {{registeredUser.email}}</p>
+        <p><b>Mobiles:</b> {{registeredUser.mobiles.join(', ')}}</p>
+      </div>
+    </div>
+  }
+</div>

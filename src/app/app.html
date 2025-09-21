@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+   <button class="btn btn-outline-info mb-2" (click)="showClock = !showClock">
+    {{ showClock ? 'Hide Clock' : 'Show Clock' }}
+  </button>
+
+  @if(showClock){
+    <app-clock></app-clock>
+  }
+
+  <router-outlet></router-outlet>
+</div>
+
+<app-footer></app-footer>

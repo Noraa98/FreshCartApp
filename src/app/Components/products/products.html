@@ -1,0 +1,50 @@
+
+<div class="container">
+  <div class="row g-4">
+    @for (product of filteredList; track product.ID)
+    {
+      <div class="col-12 col-sm-6 col-md-3">
+        <div appProductCard class="card h-100 shadow-sm">
+          <img [src]="product.Img" class="card-img-top product-img" alt="{{ product.Name }}">
+          <div class="card-body text-center">
+            <h5 class="card-title text-primary"><strong>{{ product.Name }}</strong></h5>
+            <p class="card-text mb-1"><strong>Price:</strong> {{ product.Price | currency:'USD' }}</p>
+            <p class="card-text mb-1"><strong>Quantity:</strong> {{ product.Quantity }}</p>
+            <p class="card-text mb-1"><strong>Category:</strong>{{categoryMap[product.CategoryID]}}</p>
+            <p class="card-text mb-1"><strong>Date:</strong> {{ today | date:'fullDate' }}</p>
+            <p class="card-text mb-1"><strong>Card:</strong> {{ creditCardNumber | creditCard }}</p>
+
+            @switch (product.Quantity) {
+              @case (0) {
+                <p class="text-danger fw-bold">Out of stock</p>
+              }
+              @case (1) {
+                <p class="text-warning fw-bold">Last one item!</p>
+              }
+              @case (2){
+                <p class="text-warning fw-bold">Last two item!</p>
+              }
+              @default {
+                <p class="text-success fw-bold">In stock</p>
+              }
+            }
+
+            <div >
+              <button class="btn btn-info flex-fill mt-2"
+                  (click)="buyProduct(product)"
+                  [disabled]="product.Quantity === 0">
+                Buy Now
+              </button>
+<br>
+              <button class="btn btn-secondary flex-fill mt-2"
+                  (click)="goToDetails(product.ID)">
+                Show Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
