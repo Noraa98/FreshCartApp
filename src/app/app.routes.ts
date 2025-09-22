@@ -9,36 +9,50 @@ import { ProductDetails } from './Components/product-details/product-details';
 import { ProductSearch } from './Components/product-search/product-search';
 import { UserRegestration } from './Components/user-regestration/user-regestration';
 import { UserLogin } from './Components/user-login/user-login';
+import { guestGuardGuard } from './guards/guest-guard-guard';
+import { authGardGuard } from './guards/auth-gard-guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/register', pathMatch: 'full' },
 
-  { path: 'register', component: UserRegestration },
-  { path: 'login', component: UserLogin },
   {
-    path:'home',
-    component: Home
+     path: '',
+     redirectTo: '/home',
+     pathMatch: 'full'
+  },
+  { 
+    path: 'register',
+    component: UserRegestration, 
+    canActivate: [guestGuardGuard]
+   },
+  { 
+    path: 'login',
+    component: UserLogin,
+    canActivate: [guestGuardGuard]
+    },
+  {
+    path: 'home',
+    component: Home,
   },
   {
-    path:'productSearch',
-    component: ProductSearch
-  },
-  { path: 'products/:id',
-    component: ProductDetails
+    path: 'productSearch',
+    component: ProductSearch,
+    canActivate: [authGardGuard],
   },
   {
-    path:'about',
-    component: About
+     path: 'products/:id',
+     component: ProductDetails,
+     canActivate: [authGardGuard] },
+  {
+    path: 'about',
+    component: About,
   },
   {
-    path:'contacts',
-    component: Contacts
+    path: 'contacts',
+    component: Contacts,
+  },
 
-  },
-  
   {
     path: '**',
-    component: NotFound
-  }
-
+    component: NotFound,
+  },
 ];

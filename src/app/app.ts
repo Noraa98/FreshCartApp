@@ -4,6 +4,7 @@ import { Navbar } from "./Components/navbar/navbar";
 import { Footer } from './Components/footer/footer';
 import { Clock } from "./Components/clock/clock";
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',

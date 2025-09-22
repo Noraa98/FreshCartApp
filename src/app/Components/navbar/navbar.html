@@ -1,56 +1,68 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="imges/freshcart-logo.svg" alt=""></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#"><img src="imges/freshcart-logo.svg" alt="" /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
         <!-- Home -->
-        <li class="nav-item ">
+         @if (isLoggedIn()) {
+        <li class="nav-item">
           <a
             class="nav-link"
             routerLink="/home"
             routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
             Home
           </a>
         </li>
-
-        <!-- Products -->
+      }
+        <!-- Products   - Only show if logged in -->
+         @if (isLoggedIn()) {
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/productSearch"
-            routerLinkActive="active">
-            Products
-          </a>
+          <a class="nav-link" routerLink="/productSearch" routerLinkActive="active"> Products </a>
         </li>
-
+      }
         <!-- About -->
+         @if (isLoggedIn()) {
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/about"
-            routerLinkActive="active">
-            About
-          </a>
+          <a class="nav-link" routerLink="/about" routerLinkActive="active"> About </a>
         </li>
+      }
+        <!-- Contact -->
+         @if (isLoggedIn()) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contacts" routerLinkActive="active"> Contacts </a>
+        </li>
+      }
+        <!-- If NOT logged in -->
+        @if (!isLoggedIn()) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+        </li>
+        }
 
-        <!-- Dropdown Contact -->
-        <li class="nav-item ">
-          <a
-            class="nav-link"
-            routerLink="/contacts"
-            routerLinkActive="active">
-            Contacts
-          </a>
+        <!-- If logged in -->
+        @if (isLoggedIn()) {
+        <li class="nav-item">
+          <button class="btn btn-outline-danger ms-2" (click)="logout()">Logout</button>
         </li>
+        }
       </ul>
-
-     
     </div>
   </div>
 </nav>

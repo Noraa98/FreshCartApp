@@ -18,8 +18,11 @@ export class ProductSearch {
   selectedCategoryID: string = '';
   categories: ICategory[] = [];
 
-  ngOnInit() {
-    this.categories = this.productService.GetCategories();
-  }
+ ngOnInit() {
+  this.productService.getAllProducts().subscribe(products => {
+ 
+    this.categories = this.productService.getCategories();
+  });
+}
 
 }

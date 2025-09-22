@@ -1,57 +1,92 @@
 <div class="container mt-4">
-  <h2>User Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    
-    <!-- Email -->
-    <div class="mb-3">
-      <label>Email</label>
-      <input type="email" class="form-control" formControlName="email"
-        [ngClass]="{'is-invalid': submitted && f['email'].invalid, 'is-valid': submitted && f['email'].valid}">
-      
-      @if (submitted && f['email'].errors) {
-        <div class="invalid-feedback">
-          @if (f['email'].errors['required']) {
-            <div>Email is required</div>
-          }
-          @if (f['email'].errors['email']) {
-            <div>Invalid email format</div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="text-center mb-4">User Login</h2>
+
+          <!-- Test Credentials Info -->
+          <div class="alert alert-info">
+            <strong>Test Credentials:</strong><br />
+            Username: mor_2314<br />
+            Password: 83r5^_
+          </div>
+          <h2>User Login</h2>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            
+            <!-- Username     mor_2314  -->
+            <div class="mb-3">
+              <label>Username</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="username"
+                [ngClass]="{
+                  'is-invalid': submitted && f['username'].invalid,
+                  'is-valid': submitted && f['username'].valid
+                }"
+              />
+
+              @if (submitted && f['username'].errors) {
+              <div class="invalid-feedback">
+                @if (f['username'].errors['required']) {
+                <div>Username is required</div>
+                }
+              </div>
+              }
+            </div>
+
+            <!-- Password   83r5^_ -->
+            <div class="mb-3">
+              <label>Password</label>
+              <input
+                type="password"
+                class="form-control"
+                formControlName="password"
+                [ngClass]="{
+                  'is-invalid': submitted && f['password'].invalid,
+                  'is-valid': submitted && f['password'].valid
+                }"
+              />
+
+              @if (submitted && f['password'].errors) {
+              <div class="invalid-feedback">
+                @if (f['password'].errors['required']) {
+                <div>Password is required</div>
+                } @if (f['password'].errors['minlength']) {
+                <div>Minimum 6 characters</div>
+                }
+              </div>
+              }
+            </div>
+
+            <!-- Error Message -->
+            @if (errorMessage) {
+            <div class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            }
+
+            <!-- Buttons -->
+            <button type="submit" class="btn btn-success" [disabled]="loading">
+              {{ loading ? 'Logging in...' : 'Login' }}
+            </button>
+            <button type="button" class="btn btn-warning ms-2" (click)="onReset()">Reset</button>
+          </form>
+
+          <!-- Display Logged User -->
+          @if (loggedUser) {
+          <div class="card mt-4">
+            <div class="card-body">
+              <h5 class="card-title">Logged User</h5>
+              <p><b>Username:</b> {{ loggedUser.username }}</p>
+              <p><b>Password:</b> {{ loggedUser.password }}</p>
+            </div>
+          </div>
           }
         </div>
-      }
-    </div>
-
-    <!-- Password -->
-    <div class="mb-3">
-      <label>Password</label>
-      <input type="password" class="form-control" formControlName="password"
-        [ngClass]="{'is-invalid': submitted && f['password'].invalid, 'is-valid': submitted && f['password'].valid}">
-      
-      @if (submitted && f['password'].errors) {
-        <div class="invalid-feedback">
-          @if (f['password'].errors['required']) {
-            <div>Password is required</div>
-          }
-          @if (f['password'].errors['minlength']) {
-            <div>Minimum 6 characters</div>
-          }
-        </div>
-      }
-    </div>
-
-    <!-- Buttons -->
-    <button type="submit" class="btn btn-success">Login</button>
-    <button type="button" class="btn btn-warning ms-2" (click)="onReset()">Reset</button>
-  </form>
-
-  <!-- Display Logged User -->
-  @if (loggedUser) {
-    <div class="card mt-4">
-      <div class="card-body">
-        <h5 class="card-title">Logged User</h5>
-        <p><b>Email:</b> {{loggedUser.email}}</p>
-        <p><b>Password:</b> {{loggedUser.password}}</p>
       </div>
     </div>
-  }
+  </div>
 </div>
-

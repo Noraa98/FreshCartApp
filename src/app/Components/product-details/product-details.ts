@@ -20,7 +20,10 @@ export class ProductDetails {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.product = this.productService.getProductByID(id);
+    // this.product = this.productService.getProductByID(id);
+    this.productService.getProductByID(id).subscribe(product => {
+  this.product = product;
+});
   }
 
   backToProducts() {

@@ -33,11 +33,22 @@ export class Products implements OnChanges, OnInit {
 
   ngOnInit(): void {
 
-    this.Productlist = this.productService.GetAllProducts();
-    this.filteredList = [...this.Productlist];
+    // this.Productlist = this.productService.GetAllProducts();
+    // this.filteredList = [...this.Productlist];
 
-    this.productService.GetCategories().forEach(cat => {
-    this.categoryMap[cat.ID] = cat.Name;
+    // this.productService.GetCategories().forEach(cat => {
+    // this.categoryMap[cat.ID] = cat.Name;
+    // });
+
+      
+    this.productService.getAllProducts().subscribe(products => {
+      this.Productlist = products;
+      this.filteredList = [...this.Productlist];
+
+     
+      this.productService.getCategories().forEach(cat => {
+        this.categoryMap[cat.ID] = cat.Name;
+      });
     });
   }
 
